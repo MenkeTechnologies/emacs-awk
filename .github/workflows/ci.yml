@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y emacs-nox bash shellcheck
+
+      - name: shellcheck scripts + tests
+        run: |
+          set -euo pipefail
+          shellcheck --severity=error tests/*.sh
+
+      - name: Byte-compile (warnings are errors)
+        run: |
+          set -euo pipefail
+          emacs --batch -L . \
+            --eval '(setq byte-compile-error-on-warn t)' \
+            -f batch-byte-compile awkrs-stdlib.el awkrs-mode.el
+          rm -f ./*.elc
+
+      - name: Font-lock face assertions
+        run: emacs --batch -L . -l scripts/face-test.el
+
+      - name: README / docs / workflow validators
+        run: |
+          set -euo pipefail
+          fail=0
+          for t in tests/*.sh; do
+            echo "== $t =="
+            bash "$t" || fail=1
+          done
+          exit "$fail"
