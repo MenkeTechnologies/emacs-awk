@@ -34,7 +34,7 @@ Emacs major mode (`awkrs-mode`) for **AWK**, targeting the **[awkrs](https://git
 - **eldoc + completion** — one-line signatures and `completion-at-point` for AWK builtin functions.
 - **Language server** — `awkrs --lsp` via **eglot** (built in since Emacs 29) and **lsp-mode**.
 
-AWK's builtin surface is small and fixed by the language spec, so the keyword / variable / function lists are plain `regexp-opt` lists in `awkrs-mode.el` — no generated hash-table stdlib is needed (that machinery only exists in the sibling `emacs-stryke` because stryke's ~10,450 builtins overflow Emacs' regexp compiler). Builtin-function signatures for eldoc / completion live in `awkrs-stdlib.el`, authored from the POSIX awk spec and the gawk extensions awkrs accepts.
+AWK's builtin surface is small and fixed by the language spec, so the keyword / variable / function lists are plain `regexp-opt` lists in `awkrs-mode.el` — no generated hash-table stdlib is needed (that machinery only exists in the sibling `emacs-stryke` because stryke's ~10,493 builtins overflow Emacs' regexp compiler). Builtin-function signatures for eldoc / completion live in `awkrs-stdlib.el`, authored from the POSIX awk spec and the gawk extensions awkrs accepts.
 
 `awkrs --lsp` is launched with **only** `--lsp` — an appended `--stdio` is rejected by the binary, so neither client is configured to add one.
 
