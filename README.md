@@ -28,7 +28,7 @@ Emacs major mode (`awkrs-mode`) for **AWK**, targeting the **[awkrs](https://git
 **emacs-awk** is the Emacs major mode for **AWK** (the `awkrs` engine). It provides:
 
 - **Filetype detection** — `*.awk` files (`auto-mode-alist`) and awk / awkrs shebangs (`interpreter-mode-alist`).
-- **Syntax highlighting** — font-lock for AWK keywords, the 16 built-in variables, the 22 built-in functions, field references (`$0` `$1` `$NF`), `/regex/` literals, `#` comments, strings, and numbers.
+- **Syntax highlighting** — font-lock for AWK keywords, the built-in variables, the built-in functions, field references (`$0` `$1` `$NF`), `/regex/` literals, `#` comments, strings, and numbers.
 - **Indentation** — brace-aware `indent-line-function`.
 - **Run** — `awkrs-run-buffer` (`C-c C-c`) runs the buffer's program through `awkrs` via `compile`.
 - **eldoc + completion** — one-line signatures and `completion-at-point` for AWK builtin functions.
